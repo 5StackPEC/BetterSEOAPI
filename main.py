@@ -1,8 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, File, UploadFile
-from pathlib import Path
-import shutil
 import os
 from typing import Annotated
 
@@ -41,7 +39,8 @@ async def get_score_alt(file: UploadFile):
         file_path = f"{root_path}/{file.filename}"
         with open(file_path, "wb") as f:
             f.write(file.file.read())
+            input("Continue")
+            os.remove(file_path)
             return {"message":  "Filed saved successfully"}
-        return {"message": file_path}
     except Exception as e:
         return {"message": "Internal server error"}
